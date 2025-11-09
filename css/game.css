@@ -1,0 +1,52 @@
+/* trích lược + bổ sung */
+.page-game{min-height:100dvh; display:grid; place-items:center; padding:16px}
+.stage{position:relative; width:min(620px, 96vw); aspect-ratio:62/65; overflow:hidden; border-radius:14px;}
+.bg-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0; transition:opacity .25s ease; background:transparent}
+.bg-video.playing{opacity:1}
+canvas#game{position:relative; width:100%; height:100%; display:block; background:transparent; z-index:1}
+.hud{position:absolute; inset:0; pointer-events:none; font-weight:700; z-index:2}
+.hud .top{position:absolute; inset:12px 12px auto 12px; display:flex; justify-content:space-between; gap:8px}
+.hud .bottom{position:absolute; inset:auto 12px 12px 12px}
+.hud .chip{background:rgba(15,22,43,.7); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:6px 10px; display:inline-flex; gap:8px}
+
+/* HUD compact */
+.hud.hud-compact .top{inset:8px 8px auto 8px}
+.hud.hud-compact .bottom{inset:auto 8px 8px 8px}
+.hud.hud-compact .chip{padding:4px 8px; font-size:12px; border-radius:8px}
+
+/* Touch area (giữ nguyên) */
+.touch-areas{position:absolute; inset:0; z-index:3; pointer-events:none}
+.touch-areas .zone{position:absolute; top:0; bottom:0; width:50%; pointer-events:auto}
+.touch-areas .left{left:0}
+.touch-areas .right{right:0}
+
+/* Panels */
+.game-wrap{display:grid; grid-template-columns:1fr min(620px,96vw) 1fr; gap:22px; align-items:start; width:100%; max-width:calc(var(--maxw) + 280px); margin:0 auto; padding:16px}
+.side{display:flex; flex-direction:column; gap:12px}
+.side .panel{background:var(--panel); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:12px; box-shadow:var(--shadow)}
+.side .panel h3{margin:0 0 8px 0; font-size:14px; color:#cbd5e1}
+.side .btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.side .btn-sm{padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:linear-gradient(180deg, rgba(110,231,255,.12), rgba(167,139,250,.12)); font-weight:700; font-size:13px;color:#e5e7eb}
+.select{width:100%; padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0f162b; color:var(--text)}
+.small{font-size:12px;color:#9ca3af}
+@media (max-width:1100px){ .game-wrap{grid-template-columns:1fr min(620px,96vw);} .side.right{display:none} }
+
+/* Leaderboard Modal (centered) */
+#lbBackdrop.modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(2px); z-index:1000}
+#lbModal.modal{position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1001; background:rgba(10,14,22,.98); border:1px solid rgba(255,255,255,.08); border-radius:14px; box-shadow:0 24px 60px rgba(0,0,0,.45); padding:16px 18px; width:min(520px,92vw); max-height:min(78vh,640px); overflow:auto}
+.hidden{display:none!important}
+.table-wrap{overflow:auto; max-height:60vh}
+.table{width:100%; border-collapse:collapse; font-size:14px}
+.table thead th{text-align:left; padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.12)}
+.table tbody td{padding:8px 10px; border-bottom:1px dashed rgba(255,255,255,.08)}
+.table tbody tr:hover{background:rgba(255,255,255,.04)}
+.btn.primary{background:#2563eb; color:#fff; border:none; padding:8px 12px; border-radius:10px; cursor:pointer}
+.btn.primary:hover{filter:brightness(1.08)}
+
+/* Slider rows */
+.slider-row{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:10px; margin:8px 0}
+.slider-row .label{min-width:56px; color:#e5e7eb; font-weight:600}
+
+/* Reduce flash (giảm độ chớp toàn cục nhẹ) */
+body.reduce-flash .hud .chip{background:rgba(15,22,43,.55)}
+body.reduce-flash .bg-video{filter:brightness(.95) saturate(.95)}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Galaxy Defender – Game</title>
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/game.css"/>
+</head>
+<body class="page-game">
+  <div class="game-wrap">
+    <!-- LEFT PANEL -->
+    <aside class="side left">
+      <div class="panel">
+        <h3 data-i18n="panel.quick.title">Nhanh</h3>
+        <div class="btns">
+          <button id="btnStartInGame" class="btn-sm" data-i18n="game.startBtn">Bắt đầu</button>
+          <button id="btnBackHome"   class="btn-sm" data-i18n="common.backHome">Về trang chủ</button>
+          <button id="btnPause"      class="btn-sm" data-i18n="panel.quick.pause">Tạm dừng</button>
+          <button id="btnRestart"    class="btn-sm" data-i18n="panel.quick.restart">Chơi lại</button>
+          <button id="btnHowInGame"  class="btn-sm" data-i18n="panel.quick.how">Hướng dẫn</button>
+          <button id="btnLB"         class="btn-sm" data-i18n="panel.quick.leaderboard">Bảng xếp hạng</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3 data-i18n="panel.lang.title">Ngôn ngữ</h3>
+        <select id="langSelectGame" class="select" aria-label="Language">
+          <option value="vi">Tiếng Việt</option>
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <!-- GỠ hoàn toàn panel "Kỹ năng" theo yêu cầu -->
+    </aside>
+
+    <!-- STAGE -->
+    <main class="stage card">
+      <video id="bgVideo" class="bg-video"
+             autoplay muted loop playsinline preload="metadata" controls
+             src="assets/bg/galaxy2.mp4"
+             poster="assets/bg/maxresdefault.jpg"></video>
+
+      <canvas id="game" width="620" height="650" aria-label="Game canvas"></canvas>
+
+      <section class="hud" aria-hidden="true">
+        <div class="top">
+          <div class="chip" id="hudScore" data-i18n="hud.score" data-i18n-args='{"v":0}'>Score: 0</div>
+          <div class="chip" id="hudWave"  data-i18n="hud.wave"  data-i18n-args='{"v":1}'>Wave: 1</div>
+          <div class="chip" id="hudHp"    data-i18n="hud.hp"    data-i18n-args='{"v":4}'>HP: 4</div>
+        </div>
+        <!-- GỠ chip Mode/Diff ở bottom -->
+      </section>
+    </main>
+
+    <!-- RIGHT PANEL -->
+    <aside class="side right">
+      <div class="panel">
+        <h3 data-i18n="panel.settings.title">Cài đặt</h3>
+
+        <!-- Âm lượng BGM -->
+        <div class="row slider-row">
+          <label for="bgmVol" class="label" data-i18n="panel.settings.bgm">BGM</label>
+          <input id="bgmVol" type="range" min="0" max="100" step="1" value="70" />
+          <span id="bgmVolVal">70%</span>
+        </div>
+
+        <!-- Âm lượng SFX -->
+        <div class="row slider-row">
+          <label for="sfxVol" class="label" data-i18n="panel.settings.sfx">SFX</label>
+          <input id="sfxVol" type="range" min="0" max="100" step="1" value="80" />
+          <span id="sfxVolVal">80%</span>
+        </div>
+
+        <!-- Giảm chớp / HUD -->
+        <div class="btns" style="margin-top:8px">
+          <button id="btnReduceFlash" class="btn-sm" data-i18n="panel.settings.flash">Giảm chớp</button>
+          <button id="btnHudSize"     class="btn-sm" data-i18n="panel.settings.hud">HUD</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3 data-i18n="panel.guide.title">Mẹo nhanh</h3>
+        <ul class="small" style="line-height:1.6">
+          <li data-i18n="guide.move">Di chuyển: A/D hoặc ←/→</li>
+          <li data-i18n="guide.shoot">Bắn: Space (giữ = nhanh nhưng nóng)</li>
+          <li data-i18n="guide.pause">P: Tạm dừng / R: Chơi lại</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Leaderboard Modal -->
+  <div id="lbModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="lbTitle" style="max-width:520px">
+    <div class="h2" id="lbTitle" data-i18n="lb.title">Bảng xếp hạng</div>
+    <div id="lbBody"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+      <button class="btn primary" id="lbClose" data-i18n="lb.close">Đóng</button>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="lbBackdrop"></div>
+
+  <!-- Load order: core/ui -> storage -> panel handlers -> game -->
+  <script src="js/core/i18n.js"></script>
+  <script src="js/game/storage.js"></script>
+  <script src="js/game/game_panel.js"></script>
+  <script type="module" src="js/game/main.js"></script>
+</body>
+</html>

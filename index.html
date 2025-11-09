@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Galaxy Defender – Mode Select</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/landing.css"/>
+</head>
+<body>
+
+  <!-- ===== VIDEO BACKGROUND ===== -->
+  <div class="video-wrap" aria-hidden="true">
+    <video id="bgVideo" class="video-bg" autoplay muted playsinline loop preload="metadata"
+           poster="assets/bg/space_poster.jpg">
+      <!-- VIDEO-LINK: thay bằng link ngoài nếu cần -->
+      <!-- <source src="assets/bg/space_loop.webm" type="video/webm" /> -->
+      <source src="assets/bg/space_loop.mp4" type="video/mp4" />
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+  <!-- ===== END VIDEO BACKGROUND ===== -->
+
+  <header class="container hero">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div class="logo">
+        <img src="assets/img/ui/logo2.jpg" alt="Logo"
+             onerror="this.replaceWith(Object.assign(document.createElement('div'),{textContent:'GD',className:'badge'}))">
+        <div class="h1">Galaxy Defender</div>
+      </div>
+
+      <!-- Language selector -->
+      <select id="langSelectIndex" class="select" style="width:160px">
+        <option value="vi">Tiếng Việt</option>
+        <option value="ko">한국어</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div class="headline" data-i18n="landing.headline">Chọn chế độ & bắt đầu chơi</div>
+    <p class="sub" data-i18n="landing.sub">Di chuyển trái/phải – Bắn – Né – Nạp FEVER. Chỉ với HTML/CSS/JS.</p>
+    <div class="actions">
+      <button class="btn primary" id="btnPlay" data-i18n="landing.play">Play</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="modes row cols-3">
+      <div class="card mode-card" data-mode="arcade">
+        <div class="title" data-i18n="landing.arcade.title">Arcade</div>
+        <div class="badge" data-i18n="landing.arcade.badge">Loop vô hạn</div>
+        <p class="desc" data-i18n="landing.arcade.desc">Waves tăng dần, coin & shop, mini-boss/boss định kỳ.</p>
+      </div>
+
+      <div class="card mode-card" data-mode="boss">
+        <div class="title" data-i18n="landing.boss.title">Boss Rush</div>
+        <div class="badge" data-i18n="landing.boss.badge">5 Boss liên tiếp</div>
+        <p class="desc" data-i18n="landing.boss.desc">Đua thời gian, nâng cấp tạm sau mỗi boss.</p>
+      </div>
+
+      <!-- Sửa: gắn i18n cho Time Attack -->
+      <div class="card mode-card disabled" data-mode="timeattack" title="Sẽ mở ở v1.1" style="opacity:.5;cursor:not-allowed">
+        <div class="title" data-i18n="landing.time.title">Time Attack</div>
+        <div class="badge" data-i18n="landing.time.badge">3 phút</div>
+        <p class="desc" data-i18n="landing.time.desc">Nhịp nhanh, mini-boss cuối trận. (sắp có)</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal chọn độ khó -->
+  <div id="modalDiff" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="diffTitle">
+    <div class="h2" id="diffTitle" data-i18n="diff.title">Chọn độ khó</div>
+    <div class="small" data-i18n="diff.hint">Normal được khuyến nghị cho người mới.</div>
+    <div class="radio-grid" id="diffGroup">
+      <label class="radio"><input type="radio" name="difficulty" value="easy"> <span data-i18n="diff.easy">Easy</span></label>
+      <label class="radio"><input type="radio" name="difficulty" value="normal" checked> <span data-i18n="diff.normal">Normal</span></label>
+      <label class="radio"><input type="radio" name="difficulty" value="hard"> <span data-i18n="diff.hard">Hard</span></label>
+      <label class="radio"><input type="radio" name="difficulty" value="insane"> <span data-i18n="diff.insane">Insane</span></label>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+      <button class="btn ghost" id="btnCancel" data-i18n="common.cancel">Huỷ</button>
+      <button class="btn primary" id="btnStart" data-i18n="landing.start">Start Game</button>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="backdrop"></div>
+
+  <!-- Modal How to Play -->
+  <div id="modalHow" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="howTitle">
+    <div class="h2" id="howTitle">How to Play (rút gọn)</div>
+    <ul class="small" style="line-height:1.7">
+      <li data-i18n="guide.move">Di chuyển: A/D hoặc ←/→ (mobile: chạm trái/phải).</li>
+      <li data-i18n="guide.shoot">Bắn: Space (giữ = nhanh nhưng nóng).</li>
+      <li data-i18n="guide.pause">P: Tạm dừng / R: Chơi lại.</li>
+    </ul>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn primary" id="btnHowClose">Đã hiểu</button>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="backdropHow"></div>
+
+  <script src="js/landing/index.js" defer></script>
+  <script src="js/core/i18n.js"></script>
+  <script>
+    // Language selector trên landing
+    const sel = document.getElementById('langSelectIndex');
+    if (sel){ sel.value = I18N.get() || 'vi'; sel.onchange = e => I18N.set(e.target.value); }
+  </script>
+</body>
+</html>
